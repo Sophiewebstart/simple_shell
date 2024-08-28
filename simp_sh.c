@@ -26,8 +26,9 @@ int main(int ac __attribute__((unused)), char *av[])
 	char *line = NULL;
 	size_t buf = 0;
 	char **argv = NULL;
+	int stat = 0;
 	(void) av;
-
+	
 	signal(SIGINT, sig_stop);
 
 	while (1)
@@ -56,9 +57,12 @@ int main(int ac __attribute__((unused)), char *av[])
 			continue;
 		}
 
-		 exec_pid(argv[0], argv);
+		if (find_builtin(argv, stat, line) == 0)
+			continue;
 
-		 free(argv);
+		exec_pid(argv[0], argv);
+
+		 __free(argv);
 	}
 	return (0);
 }
