@@ -55,6 +55,41 @@ int main(int ac __attribute__((unused)), char *av[])
 			free(argv);
 			continue;
 		}
+
+		exec_pid(line);
 	}
 	return (0);
+}
+
+/**
+ * exec_pid - this function executes a command
+ * @cmd_line: command to be executed
+ */
+void exec_pid(char *cmd_line)
+{
+	pid_t mypid;
+	int stat;
+	char *argv[2];
+
+	argv[0] = cmd_line;
+	argv[1] = NULL;
+
+	mypid = fork();
+	if (mypid == -1)
+	{
+		perror("Error");
+		return;
+	}
+
+	if (mypid == 0)
+	{
+		execve(cmd_line, argv, NULL);
+		perror("ERROR");
+		exit(EXIT_SUCCESS);
+	}
+	else
+	{
+		/* parent process */
+		wait(&stat);
+	}
 }
