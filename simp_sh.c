@@ -50,13 +50,13 @@ int main(int ac __attribute__((unused)), char *av[])
 
 		argv = sort_line(line);
 
-		exec_pid(line);
-
 		if (argv == NULL || argv[0] == NULL)
 		{
 			free(argv);
 			continue;
 		}
+
+		 exec_pid(line);
 	}
 	return (0);
 }
@@ -77,14 +77,14 @@ void exec_pid(char *cmd_line)
 	mypid = fork();
 	if (mypid == -1)
 	{
-		perror("Wrong");
+		perror("Error");
 		return;
 	}
 
 	if (mypid == 0)
 	{
 		execve(cmd_line, argv, NULL);
-		perror("Wrong");
+		perror("Error");
 		exit(EXIT_SUCCESS);
 	}
 	else
