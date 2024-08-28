@@ -56,7 +56,9 @@ int main(int ac __attribute__((unused)), char *av[])
 			continue;
 		}
 
-		 exec_pid(line);
+		 exec_pid(argv[0], argv);
+
+		 free(argv);
 	}
 	return (0);
 }
@@ -64,15 +66,12 @@ int main(int ac __attribute__((unused)), char *av[])
 /**
  * exec_pid - this function executes a command
  * @cmd_line: command to be executed
+ * @argv: array of arguments
  */
-void exec_pid(char *cmd_line)
+void exec_pid(char *cmd_line, char **argv)
 {
 	pid_t mypid;
 	int stat;
-	char *argv[2];
-
-	argv[0] = cmd_line;
-	argv[1] = NULL;
 
 	mypid = fork();
 	if (mypid == -1)
@@ -83,9 +82,11 @@ void exec_pid(char *cmd_line)
 
 	if (mypid == 0)
 	{
-		execve(cmd_line, argv, NULL);
-		perror("Error");
-		exit(EXIT_SUCCESS);
+		if (execve(cmd_line, argv, NULL) == -1)
+		{
+			perror("Error");
+			exit(EXIT_SUCCESS);
+		}
 	}
 	else
 	{

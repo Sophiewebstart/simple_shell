@@ -14,6 +14,6 @@ char *_strdup(const char *string);
 char **sort_line(char *string);
 void sig_stop(int sign_no);
 int main(int ac __attribute__((unused)), char *av[]);
-void exec_pid(char *cmd_line);
+void exec_pid(char *cmd_line, char **argv);
 
 #endif
