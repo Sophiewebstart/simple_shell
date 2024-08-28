@@ -52,7 +52,7 @@ int main(int ac __attribute__((unused)), char *av[])
 
 		if (argv == NULL || argv[0] == NULL)
 		{
-			free(argv);
+			__free(argv);
 			continue;
 		}
 
@@ -76,7 +76,7 @@ void exec_pid(char *cmd_line, char **argv)
 	mypid = fork();
 	if (mypid == -1)
 	{
-		perror("Error");
+		perror("Wrong");
 		return;
 	}
 
@@ -84,7 +84,7 @@ void exec_pid(char *cmd_line, char **argv)
 	{
 		if (execve(cmd_line, argv, NULL) == -1)
 		{
-			perror("Error");
+			perror("Wrong");
 			exit(EXIT_SUCCESS);
 		}
 	}
@@ -93,4 +93,29 @@ void exec_pid(char *cmd_line, char **argv)
 		/* parent process */
 		wait(&stat);
 	}
+}
+
+/**
+ * __free - this function frees the memory of a double pointer
+ * @my_memory: memory to be freed
+ */
+void __free(char **my_memory)
+{
+	char **tmp_mem;
+
+	if (my_memory == NULL)
+	{
+		return;
+	}
+
+	tmp_mem = my_memory;
+
+	while (*tmp_mem != NULL)
+	{
+		free(*tmp_mem);
+		*tmp_mem = NULL;
+		tmp_mem++;
+	}
+
+	free(my_memory);
 }

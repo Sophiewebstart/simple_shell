@@ -15,5 +15,6 @@ char **sort_line(char *string);
 void sig_stop(int sign_no);
 int main(int ac __attribute__((unused)), char *av[]);
 void exec_pid(char *cmd_line, char **argv);
+void __free(char **my_memory);
 
 #endif
