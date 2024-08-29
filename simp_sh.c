@@ -57,10 +57,10 @@ int main(int ac __attribute__((unused)), char *av[])
 			continue;
 		}
 
-		if (find_builtin(argv, stat, line) == 0)
+		if (find_builtin(argv, stat, line) == 1)
 			continue;
 
-		exec_pid(argv[0], argv);
+		exec_pid(argv);
 
 		 __free(argv);
 	}
@@ -72,7 +72,7 @@ int main(int ac __attribute__((unused)), char *av[])
  * @cmd_line: command to be executed
  * @argv: array of arguments
  */
-void exec_pid(char *cmd_line, char **argv)
+void exec_pid(char **argv)
 {
 	pid_t mypid;
 	int stat;
@@ -86,7 +86,7 @@ void exec_pid(char *cmd_line, char **argv)
 
 	if (mypid == 0)
 	{
-		if (execve(cmd_line, argv, NULL) == -1)
+		if (execve(argv[0], argv, environ) == -1)
 		{
 			perror("Wrong");
 			exit(EXIT_SUCCESS);

@@ -16,7 +16,7 @@ char *_strdup(const char *string);
 char **sort_line(char *string);
 void sig_stop(int sign_no);
 int main(int ac __attribute__((unused)), char *av[]);
-void exec_pid(char *cmd_line, char **argv);
+void exec_pid(char **argv);
 void __free(char **my_memory);
 int find_builtin(char **argv, int stat, char *line);
 int __atoi(const char *string);

@@ -10,6 +10,8 @@
  */
 int find_builtin(char **argv, int stat, char *line)
 {
+    char **env = environ;
+
 	if (_strcmp(argv[0], "exit") == 0)
 	{
 		if (argv[1] == NULL)
@@ -28,15 +30,16 @@ int find_builtin(char **argv, int stat, char *line)
 
 	if (_strcmp(argv[0], "env") == 0)
 	{
-		while (*environ != NULL)
+		while (*env != NULL)
 		{
-			write(1, *environ, _strlen(*environ));
+			write(1, *env, _strlen(*env));
 			write(1, "\n", 1);
 
-			environ++;
+			env++;
 		}
 
 		__free(argv);
+        return (1);
 	}
 	return (0);
 }
