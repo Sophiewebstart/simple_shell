@@ -28,7 +28,7 @@ int main(int ac __attribute__((unused)), char *av[])
 	char **argv = NULL;
 	int stat = 0;
 	(void) av;
-	
+
 	signal(SIGINT, sig_stop);
 
 	while (1)
@@ -50,7 +50,6 @@ int main(int ac __attribute__((unused)), char *av[])
 			continue;
 
 		argv = sort_line(line);
-
 		if (argv == NULL || argv[0] == NULL)
 		{
 			__free(argv);
@@ -61,42 +60,51 @@ int main(int ac __attribute__((unused)), char *av[])
 			continue;
 
 		exec_pid(argv);
-
-		 __free(argv);
+		__free(argv);
 	}
 	return (0);
 }
 
 /**
  * exec_pid - this function executes a command
- * @cmd_line: command to be executed
  * @argv: array of arguments
  */
 void exec_pid(char **argv)
 {
 	pid_t mypid;
 	int stat;
+	char *new_cmd;
 
 	mypid = fork();
 	if (mypid == -1)
 	{
-		perror("Wrong");
+		perror("no fork");
 		return;
 	}
 
-	if (mypid == 0)
+	else if (mypid == 0)
 	{
-		if (execve(argv[0], argv, environ) == -1)
+		new_cmd = path_construct(argv[0]);
+		if (!new_cmd)
 		{
-			perror("Wrong");
+			perror("cmd not here");
+			exit(EXIT_SUCCESS);
+		}
+
+		if (execve(new_cmd, argv, environ) == -1)
+		{
+			perror("Wrong again");
+			free(new_cmd);
 			exit(EXIT_SUCCESS);
 		}
 	}
 	else
 	{
 		/* parent process */
-		wait(&stat);
+		waitpid(mypid, &stat, 0);
 	}
+
+	free(new_cmd);
 }
 
 /**

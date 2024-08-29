@@ -10,7 +10,7 @@
  */
 int find_builtin(char **argv, int stat, char *line)
 {
-    char **env = environ;
+	char **env = environ;
 
 	if (_strcmp(argv[0], "exit") == 0)
 	{
@@ -39,7 +39,8 @@ int find_builtin(char **argv, int stat, char *line)
 		}
 
 		__free(argv);
-        return (1);
+
+		return (1);
 	}
 	return (0);
 }
@@ -83,7 +84,7 @@ int __atoi(const char *string)
   * accordingly as the string pointed to by s1 is greater than
   * equal to, or less than the string pointed to by s2.
   */
-int _strcmp(char *s1, char *s2)
+int _strcmp(const char *s1, const char *s2)
 {
 	int i;
 

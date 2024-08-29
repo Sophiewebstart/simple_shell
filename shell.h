@@ -7,6 +7,8 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stddef.h>
+#include <sys/stat.h>
 
 extern char **environ;
 
@@ -20,6 +22,11 @@ void exec_pid(char **argv);
 void __free(char **my_memory);
 int find_builtin(char **argv, int stat, char *line);
 int __atoi(const char *string);
-int _strcmp(char *s1, char *s2);
+int _strcmp(const char *s1, const char *s2);
+char *path_construct(char *cmd_line);
+char *get_env(const char *name);
+char *_strncpy(char *dest, const char *src, int n);
+char *_strncat(char *dest, const char *src, int n);
+char *path_finder(const char *pth_token, const char *cmd_line);
 
 #endif
