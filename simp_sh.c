@@ -73,7 +73,7 @@ void exec_pid(char **argv)
 {
 	pid_t mypid;
 	int stat;
-	char *new_cmd;
+	char *new_cmd = NULL;
 
 	mypid = fork();
 	if (mypid == -1)
@@ -94,7 +94,6 @@ void exec_pid(char **argv)
 		if (execve(new_cmd, argv, environ) == -1)
 		{
 			perror("Wrong again");
-			free(new_cmd);
 			exit(EXIT_SUCCESS);
 		}
 	}
@@ -103,8 +102,10 @@ void exec_pid(char **argv)
 		/* parent process */
 		waitpid(mypid, &stat, 0);
 	}
-
-	free(new_cmd);
+	if (new_cmd != argv[0])
+	{
+		free(new_cmd);
+	}
 }
 
 /**

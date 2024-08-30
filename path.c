@@ -73,7 +73,7 @@ char *get_env(const char *name)
 }
 
 /**
- * path_finder - gets the path of the prrogram
+ * path_finder - gets the path of the program
  * @cmd_line: command
  * @pth_token: tokenized path
  *
@@ -108,14 +108,15 @@ char *path_finder(const char *pth_token, const char *cmd_line)
 	return (file_path);
 }
 
- /**
-  * _strncpy - this function copies a string into another string
-  * @dest: string to be copied to
-  * @src: string being copied
-  * @n: number of bytes to be copied
-  *
-  * Return: destination string
-  */
+/**
+ * _strncpy - this function copies the string 'src'
+ * into the string 'dest'
+ * @dest: string to be copied to
+ * @src: string being copied
+ * @n: number of bytes to be copied
+ *
+ * Return: pointer to destination string
+ */
 char *_strncpy(char *dest, const char *src, int n)
 {
 	int i;
